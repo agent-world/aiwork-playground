@@ -1,6 +1,6 @@
 # 🎮 AI Work Playground
 
-Welcome to the **AI Work Playground** - an experimental repository designed for collaborative video coding using AI agents! This is your sandbox to explore, test, and push the boundaries of what's possible with AI-powered development.
+Welcome to the **AI Work Playground** - an experimental repository designed for collaborative vibe coding using AI agents! This is your sandbox to explore, test, and push the boundaries of what's possible with AI-powered development.
 
 ## 🚀 What is AI Work Playground?
 
