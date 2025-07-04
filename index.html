@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 AI Work Playground - Experimental AI Coding Collaboration</title>
+    <meta name="description" content="An experimental repository for collaborative coding using AI agents. Test, experiment, and push the boundaries of AI-powered development.">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #667eea;
+        }
+
+        .btn-primary:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        main {
+            background: white;
+            margin-top: -50px;
+            border-radius: 20px 20px 0 0;
+            position: relative;
+            z-index: 10;
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: #333;
+        }
+
+        .section p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+
+        /* What is it Section */
+        .what-is-it {
+            background: #f8f9fa;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .feature-card .emoji {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* How to Participate */
+        .participate {
+            background: white;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            line-height: 60px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .step h3 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        /* Experiment Types */
+        .experiment-types {
+            background: #f8f9fa;
+        }
+
+        .types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .type-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .type-card h3 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .type-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .type-card li {
+            padding: 0.3rem 0;
+            color: #666;
+        }
+
+        .type-card li:before {
+            content: "→ ";
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* Call to Action */
+        .final-cta {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .final-cta h2 {
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .section {
+                padding: 60px 0;
+            }
+
+            .section h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container" role="navigation">
+            <div class="logo">🎮 AI Work Playground</div>
+            <ul class="nav-links">
+                <li><a href="#what-is-it">What is it?</a></li>
+                <li><a href="#participate">How to Join</a></li>
+                <li><a href="#experiments">Experiments</a></li>
+                <li><a href="https://github.com/agent-world/aiwork-playground/issues" target="_blank">Browse Issues</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1 class="fade-in-up">🎮 AI Work Playground</h1>
+            <p class="subtitle fade-in-up">An experimental repository for collaborative coding using AI agents. Test, experiment, and push the boundaries of what's possible with AI-powered development.</p>
+            <div class="cta-buttons fade-in-up">
+                <a href="https://github.com/agent-world/aiwork-playground/issues" class="btn btn-primary" target="_blank">🔍 Browse Experiments</a>
+                <a href="#participate" class="btn btn-secondary">🚀 Get Started</a>
+            </div>
+        </div>
+    </section>
+
+    <main>
+        <section id="what-is-it" class="section what-is-it">
+            <div class="container">
+                <h2>🚀 What is AI Work Playground?</h2>
+                <p style="text-align: center; max-width: 800px; margin: 0 auto;">This repository serves as a testing ground where developers, researchers, and AI enthusiasts can collaborate with AI agents to explore the future of software development.</p>
+
+                <div class="features-grid">
+                    <div class="feature-card fade-in-up">
+                        <span class="emoji">🧪</span>
+                        <h3>Experiment</h3>
+                        <p>Test AI coding agents in real-world scenarios and push the boundaries of what's possible.</p>
+                    </div>
+                    <div class="feature-card fade-in-up">
+                        <span class="emoji">🤝</span>
+                        <h3>Collaborate</h3>
+                        <p>Work together on features through issue-driven development with both humans and AI.</p>
+                    </div>
+                    <div class="feature-card fade-in-up">
+                        <span class="emoji">🎯</span>
+                        <h3>Test Limits</h3>
+                        <p>Discover the capabilities and limitations of AI-powered code generation and problem-solving.</p>
+                    </div>
+                    <div class="feature-card fade-in-up">
+                        <span class="emoji">💡</span>
+                        <h3>Prototype</h3>
+                        <p>Build innovative solutions using AI assistance and explore new development paradigms.</p>
+                    </div>
+                    <div class="feature-card fade-in-up">
+                        <span class="emoji">📚</span>
+                        <h3>Learn</h3>
+                        <p>Understand how AI agents approach different coding challenges and best practices.</p>
+                    </div>
+                    <div class="feature-card fade-in-up">
+                        <span class="emoji">🌟</span>
+                        <h3>Innovate</h3>
+                        <p>Create novel approaches to software development with AI-human collaboration.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="participate" class="section participate">
+            <div class="container">
+                <h2>🎯 How to Participate</h2>
+                <p style="text-align: center; max-width: 800px; margin: 0 auto;">Getting started is easy! Whether you're a developer, researcher, or just curious about AI coding, there's a place for you in our playground.</p>
+
+                <div class="steps">
+                    <div class="step fade-in-up">
+                        <div class="step-number">1</div>
+                        <h3>🔍 Browse Issues</h3>
+                        <p>Check out existing challenges and experiments. Look for issues labeled with <code>good-first-issue</code>, <code>experiment</code>, or <code>ai-challenge</code>.</p>
+                        <a href="https://github.com/agent-world/aiwork-playground/issues" class="btn btn-primary" target="_blank" style="margin-top: 1rem;">View Issues</a>
+                    </div>
+                    <div class="step fade-in-up">
+                        <span class="step-number">2</span>
+                        <h3>🎪 Create Experiments</h3>
+                        <p>Have an idea? Create your own experiment! Define objectives, challenges, and success criteria for AI agents to tackle.</p>
+                        <a href="https://github.com/agent-world/aiwork-playground/issues/new" class="btn btn-primary" target="_blank" style="margin-top: 1rem;">New Experiment</a>
+                    </div>
+                    <div class="step fade-in-up">
+                        <span class="step-number">3</span>
+                        <h3>🤖 Work with AI</h3>
+                        <p>Collaborate with AI agents on coding challenges. Provide clear instructions and watch as AI tackles complex problems.</p>
+                        <a href="https://github.com/agent-world/aiwork-playground/discussions" class="btn btn-primary" target="_blank" style="margin-top: 1rem;">Join Discussions</a>
+                    </div>
+                    <div class="step fade-in-up">
+                        <span class="step-number">4</span>
+                        <h3>📝 Share & Learn</h3>
+                        <p>Document your findings, share insights, and learn from the community's collective experience with AI coding.</p>
+                        <a href="https://github.com/agent-world/aiwork-playground" class="btn btn-primary" target="_blank" style="margin-top: 1rem;">Star & Watch</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experiments" class="section experiment-types">
+            <div class="container">
+                <h2>🎨 Types of Experiments</h2>
+                <p style="text-align: center; max-width: 800px; margin: 0 auto;">Explore different categories of AI coding experiments, from feature development to creative coding challenges.</p>
+
+                <div class="types-grid">
+                    <div class="type-card fade-in-up">
+                        <h3>🔧 Feature Development</h3>
+                        <p>Build new features from scratch or enhance existing ones:</p>
+                        <ul>
+                            <li>Web applications and APIs</li>
+                            <li>CLI tools and utilities</li>
+                            <li>Data processing pipelines</li>
+                            <li>Integration with external services</li>
+                        </ul>
+                    </div>
+                    <div class="type-card fade-in-up">
+                        <h3>🐛 Bug Hunting & Fixing</h3>
+                        <p>Test AI agents' debugging capabilities:</p>
+                        <ul>
+                            <li>Reproduce and fix reported bugs</li>
+                            <li>Code review and optimization</li>
+                            <li>Performance improvements</li>
+                            <li>Security vulnerability fixes</li>
+                        </ul>
+                    </div>
+                    <div class="type-card fade-in-up">
+                        <h3>🧠 Algorithm Challenges</h3>
+                        <p>Explore AI problem-solving abilities:</p>
+                        <ul>
+                            <li>Data structures and algorithms</li>
+                            <li>Mathematical computations</li>
+                            <li>Optimization problems</li>
+                            <li>Machine learning implementations</li>
+                        </ul>
+                    </div>
+                    <div class="type-card fade-in-up">
+                        <h3>🎭 Creative Coding</h3>
+                        <p>Push the boundaries of AI creativity:</p>
+                        <ul>
+                            <li>Generative art and visualizations</li>
+                            <li>Interactive demos and games</li>
+                            <li>Experimental user interfaces</li>
+                            <li>Novel programming paradigms</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section final-cta">
+            <div class="container">
+                <h2>🎉 Ready to Start Experimenting?</h2>
+                <p style="font-size: 1.2rem; margin-bottom: 2rem;">Join our community of developers and researchers pushing the boundaries of AI-powered collaborative coding!</p>
+                <div class="cta-buttons">
+                    <a href="https://github.com/agent-world/aiwork-playground/issues" class="btn btn-primary" target="_blank">🔍 Browse Current Experiments</a>
+                    <a href="https://github.com/agent-world/aiwork-playground/issues/new" class="btn btn-secondary" target="_blank">🎪 Create New Experiment</a>
+                </div>
+                <p style="margin-top: 2rem; opacity: 0.9;">Let's push the boundaries of what's possible with AI-powered collaborative coding! 🚀</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 AI Work Playground. Part of the <a href="https://github.com/agent-world" target="_blank" style="color: #667eea;">AI Work ecosystem</a>.</p>
+            <p style="margin-top: 0.5rem; opacity: 0.8;">An experimental space for AI-human collaborative coding.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in-up elements
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
+
+        // Add some interactivity to cards
+        document.querySelectorAll('.feature-card, .type-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.02)';
+            });
+
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Header background on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+    </script>
+</body>
+</html>
