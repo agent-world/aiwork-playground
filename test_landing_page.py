@@ -33,12 +33,12 @@ def test_landing_page():
     # Content Requirements
     check_requirement(
         "Hero section with clear headline",
-        "AI Work Playground" in content and "experimental repository" in content
+        "AI Work Playground" in content and "development sandbox" in content
     )
 
     check_requirement(
         "Explanation of playground's purpose",
-        "testing ground" in content and "AI agents" in content
+        "development sandbox" in content and "AI agents" in content
     )
 
     check_requirement(
